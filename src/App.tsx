@@ -177,7 +177,7 @@ function App() {
           <div className="hero-copy">
             <p className="eyebrow"><span className="eyebrow-line" /> AN INDEPENDENT STUDY OF MECHANICAL WATCHES</p>
             <h1>Time, made<br /><em>mechanical.</em></h1>
-            <p className="hero-desc">A closer look at the design decisions behind a watch: how its parts work, how its display is read, and how different forms solve different problems.</p>
+            <p className="hero-desc">Three original watch studies and an interactive case. See how a bezel tracks elapsed minutes, how a crystal protects the dial, and how hands and markers make time readable.</p>
             <div className="hero-actions">
               <a className="button button-light" href="#collection">VIEW THE STUDIES <ArrowRight size={16} aria-hidden="true" /></a>
               <a className="text-link" href="#anatomy">OPEN THE CASE <ArrowDown size={15} aria-hidden="true" /></a>
@@ -220,7 +220,7 @@ function App() {
 
         <section id="anatomy" className="anatomy section-pad">
           <div className="anatomy-head reveal">
-            <div><p className="eyebrow">ANATOMY OF A WATCH</p><h2>Look beneath<br /><em>the surface.</em></h2></div>
+            <div><p className="eyebrow">ANATOMY OF A WATCH</p><h2>Four parts.<br /><em>One display.</em></h2></div>
             <p className="body-copy muted">Select a part to highlight it. Scroll to separate the outer layers, or drag the model to inspect the case from another angle.</p>
           </div>
 
@@ -309,7 +309,7 @@ function App() {
             <p className="eyebrow">A SHORT HISTORY</p>
             <h2>How time<br /><em>became portable.</em></h2>
             <p className="body-copy muted">Five milestones in the shift from portable clocks to modern wristwatches.</p>
-            <div className="timeline-fact"><span>A RECURRING DESIGN PROBLEM</span><p>Accuracy, readability, and portability rarely improve together by accident. Each is a set of engineering choices—and often a compromise.</p></div>
+            <div className="timeline-fact"><span>A RECURRING DESIGN PROBLEM</span><p>Accuracy, legibility, and portability can pull in different directions. Every watch design balances them in its own way.</p></div>
           </div>
           <div className="timeline-items">
             {timeline.map((item) => (
