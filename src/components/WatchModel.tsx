@@ -49,7 +49,7 @@ function WatchParts() {
     <group ref={group} rotation={[0.12, -0.32, -0.08]} scale={1.08}>
       {/* Three-piece Oyster-style bracelet: individual links, brushed outer links and polished centre links */}
       {[-1, 1].map((side) => (
-        <group key={side} position={[0, side * 1.02, -0.025]}>
+        <group key={side} position={[0, 0, -0.025]}>
           {Array.from({ length: 7 }, (_, i) => {
             const y = side * (0.84 + i * 0.235);
             return (
