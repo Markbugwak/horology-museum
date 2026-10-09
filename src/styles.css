@@ -388,3 +388,88 @@ html { scroll-padding-top: 92px; }
 @keyframes hero-watch-drift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
 .hero-stage .hero-watch-image { animation:hero-watch-drift 8s ease-in-out infinite; }
 @media(prefers-reduced-motion:reduce) { .hero-stage .hero-watch-image { animation:none!important; } }
+
+
+/* Round 3 refinements: keep the museum presentation calm and legible. */
+.site-header {
+  background: #f5f3ed;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  isolation: isolate;
+}
+.site-header::before,
+.site-header::after { content: none !important; }
+
+.hero-stage .hero-watch-image { padding: 4.5% 7% 22%; }
+.hero-stage .hero-model-link { bottom: 7.5%; }
+
+.exhibit-art .art-watch:before,
+.exhibit-art .art-watch:after {
+  height: 34px;
+  left: 31px;
+  width: 34px;
+}
+.exhibit-art .art-watch:before { bottom: 100%; }
+.exhibit-art .art-watch:after { top: 100%; }
+.exhibit-art .art-feature {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  display: block;
+  max-width: none;
+  padding: 7px 8px;
+  text-align: center;
+  line-height: 1.5;
+  background: rgba(12,16,12,.88);
+}
+.art-hour-marker {
+  position: absolute;
+  z-index: 1;
+  top: 4px;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 8px;
+  border-radius: 1px;
+  background: #e8dfc8;
+  box-shadow: 0 0 2px rgba(232,223,200,.18);
+  transform-origin: 50% 46px;
+}
+.art-watch-03 .art-hour-marker { background: #e8dfc8; }
+.art-watch-03 .art-hour-marker:nth-child(3n + 1) { background: #c3a875; }
+
+.footer-inner p {
+  font: 12px/1.8 'Manrope', sans-serif;
+  letter-spacing: 0;
+  color: #686a60;
+}
+
+.timeline-intro { position: sticky; top: 110px; align-self: start; }
+.timeline-fact {
+  max-width: 360px;
+  margin-top: 38px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(36,39,31,.2);
+}
+.timeline-fact span {
+  display: block;
+  margin-bottom: 10px;
+  font: 9px/1.5 'DM Mono', monospace;
+  letter-spacing: .14em;
+  color: #8b754b;
+}
+.timeline-fact p {
+  margin: 0;
+  font: 12px/1.9 'Manrope', sans-serif;
+  color: #66685e;
+}
+@media (max-width: 680px) {
+  .hero-stage .hero-watch-image { padding: 5% 3% 24%; }
+  .hero-stage .hero-model-link { bottom: 8%; }
+  .timeline-intro { position: static; }
+  .timeline-fact { margin-top: 24px; }
+  .exhibit-art .art-watch:before,
+  .exhibit-art .art-watch:after { left: 31px; width: 34px; }
+}
