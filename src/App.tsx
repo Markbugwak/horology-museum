@@ -80,6 +80,7 @@ function App() {
   const [selectedExhibit, setSelectedExhibit] = useState<(typeof exhibits)[number] | null>(null);
   const [anatomyModelReady, setAnatomyModelReady] = useState(false);
   const modalCloseRef = useRef<HTMLButtonElement>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const revealObserver = new IntersectionObserver((entries) => {
@@ -143,6 +144,7 @@ function App() {
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
+      lastTriggerRef.current?.focus();
     };
   }, [selectedExhibit]);
 
@@ -252,7 +254,7 @@ function App() {
                 type="button"
                 className={`exhibit-card reveal exhibit-${item.number}`}
                 key={item.number}
-                onClick={() => setSelectedExhibit(item)}
+                onClick={(event) => { lastTriggerRef.current = event.currentTarget; setSelectedExhibit(item); }}
                 aria-label={`Read about ${item.name}`}
               >
                 <div className="exhibit-art">
