@@ -435,7 +435,7 @@ html { scroll-padding-top: 92px; }
   border-radius: 1px;
   background: #e8dfc8;
   box-shadow: 0 0 2px rgba(232,223,200,.18);
-  transform-origin: 50% 46px;
+  transform-origin: 50% 52px;
 }
 .art-watch-03 .art-hour-marker { background: #e8dfc8; }
 .art-watch-03 .art-hour-marker:nth-child(3n + 1) { background: #c3a875; }
