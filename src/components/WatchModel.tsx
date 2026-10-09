@@ -91,12 +91,11 @@ function WatchParts() {
 
       {/* Dark dive bezel with minute graduations and the signature triangle at 12 */}
       <group ref={bezel} position={[0, 0, 0.245]}>
-        <mesh>
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[1.025, 1.025, 0.13, 96]} />
-          <meshStandardMaterial color="#7b858d" metalness={0.94} roughness={0.2} />
           <SteelMaterial color="#7b858d" roughness={0.2} />
         </mesh>
-        <mesh position={[0, 0, 0.078]}>
+        <mesh position={[0, 0, 0.078]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.985, 0.985, 0.045, 96]} />
           <meshStandardMaterial color={BEZEL} metalness={0.55} roughness={0.24} />
         </mesh>
@@ -168,7 +167,7 @@ function WatchParts() {
         <meshStandardMaterial color="#e5e3d8" roughness={0.34} />
       </mesh>
       <Text position={[0.53, 0.02, 0.231]} fontSize={0.11} color="#1b2224" anchorX="center" anchorY="middle">09</Text>
-      <mesh position={[0.53, 0.02, 0.265]}>
+      <mesh position={[0.53, 0.02, 0.265]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.145, 0.145, 0.018, 48]} />
         <meshPhysicalMaterial color="#d7e5e9" transparent opacity={0.28} roughness={0.06} transmission={0.5} />
       </mesh>
@@ -200,7 +199,7 @@ function WatchParts() {
           <boxGeometry args={[0.012, 0.69, 0.012]} />
           <meshStandardMaterial color="#d4c18b" metalness={0.8} roughness={0.18} />
         </mesh>
-        <mesh position={[0, 0, 0.078]}>
+        <mesh position={[0, 0, 0.078]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.055, 0.055, 0.035, 32]} />
           <meshStandardMaterial color={GOLD} metalness={0.88} roughness={0.18} />
         </mesh>
