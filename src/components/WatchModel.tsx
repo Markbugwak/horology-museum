@@ -21,7 +21,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
   const dial = useRef<THREE.Mesh>(null);
   const hands = useRef<THREE.Group>(null);
   const markers = useRef<THREE.Group>(null);
-  const [explode, setExplode] = useState(0);
+  const explode = useRef(0);
   const dim = (part: WatchPartKey) => activePart && activePart !== part ? 0.3 : 1;
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
       const rect = section.getBoundingClientRect();
       const progress = THREE.MathUtils.clamp((window.innerHeight - rect.top) / (rect.height + window.innerHeight), 0, 1);
       const amount = progress < 0.25 ? 0 : progress < 0.7 ? (progress - 0.25) / 0.45 : Math.max(0, (1 - progress) / 0.3);
-      setExplode(THREE.MathUtils.clamp(amount, 0, 1));
+      explode.current = THREE.MathUtils.clamp(amount, 0, 1);
     };
     window.addEventListener('scroll', update, { passive: true });
     update();
@@ -39,7 +39,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
   }, []);
 
   useFrame((state) => {
-    const e = THREE.MathUtils.clamp(explode, 0, 1);
+    const e = THREE.MathUtils.clamp(explode.current, 0, 1);
     if (group.current) group.current.position.y = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
     if (bezel.current) bezel.current.position.z = 0.245 + e * 0.88 + (activePart === "bezel" ? 0.18 : 0);
     if (caseLayer.current) caseLayer.current.position.z = -e * 0.42 + (activePart === "case" ? -0.16 : 0);
@@ -61,7 +61,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
                 {[-1, 0, 1].map((column) => (
                   <mesh key={column} position={[column * 0.32, 0, column === 0 ? 0.012 : 0]}>
                     <RoundedBox args={[0.30, 0.218, column === 0 ? 0.105 : 0.09]} radius={0.035} smoothness={4} />
-                    <SteelMaterial color={column === 0 ? '#68747B' : '#46515A'} roughness={column === 0 ? 0.36 : 0.48} opacity={activePart ? 0.22 : 0.96} />
+                    <SteelMaterial color={column === 0 ? '#68747B' : '#46515A'} roughness={column === 0 ? 0.36 : 0.48} opacity={0.96} />
                   </mesh>
                 ))}
               </group>
@@ -157,16 +157,12 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
 
       {/* Keep the dial free of invented manufacturer lettering. */}
 
-      {/* Date window and raised cyclops magnifier at 3 o'clock */}
+      {/* Flush date aperture, kept free of manufacturer-specific magnifier styling. */}
       <mesh position={[0.53, 0.02, 0.211]}>
         <boxGeometry args={[0.19, 0.205, 0.028]} />
         <meshStandardMaterial color="#e5e3d8" roughness={0.34} />
       </mesh>
       <Text position={[0.53, 0.02, 0.231]} fontSize={0.11} color="#1b2224" anchorX="center" anchorY="middle">09</Text>
-      <mesh position={[0.53, 0.02, 0.265]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.145, 0.145, 0.018, 48]} />
-        <meshPhysicalMaterial color="#d7e5e9" transparent opacity={0.28} roughness={0.06} transmission={0.5} />
-      </mesh>
 
       {/* Three central hands and pinion */}
       <group ref={hands} position={[0, 0, 0.205]}>
@@ -175,14 +171,6 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
           <mesh position={[0, 0.16, 0.025]}>
             <boxGeometry args={[0.07, 0.32, 0.025]} />
             <meshStandardMaterial color="#E6D8B0" metalness={0.8} roughness={0.25} transparent={activePart && activePart !== "hands"} opacity={dim("hands")} />
-          </mesh>
-          <mesh position={[0, 0.29, 0.042]}>
-            <torusGeometry args={[0.048, 0.014, 8, 24]} />
-            <meshStandardMaterial color="#e5e9df" metalness={0.72} roughness={0.2} />
-          </mesh>
-          <mesh position={[0, 0.29, 0.039]}>
-            <circleGeometry args={[0.034, 24]} />
-            <meshStandardMaterial color="#10221d" />
           </mesh>
         </group>
         {/* Minute hand */}
