@@ -131,7 +131,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
       {/* Full-size crystal sits above the indices and hands, and separates as its own layer. */}
       <mesh ref={crystal} position={[0, 0, 0.32]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.88, 0.88, 0.018, 96]} />
-        <meshPhysicalMaterial color="#E8DFC8" transparent opacity={0.12} roughness={0.05} clearcoat={1} ior={1.5} depthWrite={false} />
+        <meshPhysicalMaterial color="#E8DFC8" transparent opacity={activePart === "crystal" ? 0.28 : 0.12} roughness={0.05} clearcoat={1} ior={1.5} depthWrite={false} />
       </mesh>
 
       {/* Luminous applied hour markers */}
