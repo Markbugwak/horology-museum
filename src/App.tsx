@@ -14,20 +14,32 @@ function Header({ activeSection }: { activeSection: string }) {
     <a className="wordmark" href="#top" aria-label="Horology home"><span className="mark">H</span><span>HOROLOGY<small>THE WATCH MUSEUM</small></span></a>
     <button className="mobile-menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
     <nav className={open ? 'nav-links open' : 'nav-links'} onClick={() => setOpen(false)}>
-      <a href="#collection">THE COLLECTION</a><a href="#anatomy">CRAFTSMANSHIP</a><a href="#timeline">OUR STORY</a>
-      <a className="nav-visit" href="#about">ABOUT HOROLOGY <ArrowUpRight size={14} /></a>
+      <a className={activeSection === "collection" ? "active" : ""} href="#collection">THE COLLECTION</a><a className={activeSection === "anatomy" ? "active" : ""} href="#anatomy">CRAFTSMANSHIP</a><a className={activeSection === "timeline" ? "active" : ""} href="#timeline">OUR STORY</a>
+      <a className={`nav-visit ${activeSection === "about" ? "active" : ""}`} href="#about">ABOUT HOROLOGY</a>
     </nav>
   </header>;
 }
 
 function App() {
-  const [active, setActive] = useState(0);\n  const [activeSection, setActiveSection] = useState('top');\n  const [selectedExhibit, setSelectedExhibit] = useState<(typeof exhibits)[number] | null>(null);
+  const [active, setActive] = useState(0);
+  const [activeSection, setActiveSection] = useState('top');\n  const [selectedExhibit, setSelectedExhibit] = useState<(typeof exhibits)[number] | null>(null);
   useEffect(() => {
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('is-visible');
     }), { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => reveal.observe(el));
-    return () => reveal.disconnect();
+    const sections = ['top', 'anatomy', 'collection', 'timeline', 'about'].map(id => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const navObserver = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) {
+        const id = visible.target.id || 'top';
+        setActiveSection(id);
+        if (id !== 'top' && window.location.hash !== `#${id}`) history.replaceState(null, '', `#${id}`);
+        if (id === 'top' && window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }, { rootMargin: '-22% 0px -58% 0px', threshold: [0, 0.15, 0.35, 0.6] });
+    sections.forEach(section => navObserver.observe(section));
+    return () => { reveal.disconnect(); navObserver.disconnect(); };
   }, []);
   return <div id="top">
     <Header activeSection={activeSection} />
@@ -46,7 +58,6 @@ function App() {
           <WatchModel />
           <div className="stage-caption"><span>01 — THE INSTRUMENT</span><span>STAINLESS STEEL / AUTOMATIC</span></div>
         </div>
-        <a className="scroll-cue" href="#intro"><span>SCROLL TO BEGIN</span><ArrowDown size={15} /></a>
       </section>
 
       <section id="intro" className="intro section-pad reveal">
@@ -74,6 +85,7 @@ function App() {
       <section id="about" className="closing section-pad"><p className="eyebrow">THE ART OF KEEPING TIME</p><h2>Look closer.<br /><em>Time rewards it.</em></h2><a className="button button-light" href="#collection">EXPLORE THE COLLECTION <ArrowRight size={16} /></a><div className="closing-orbit" /></section>
     </main>
     <footer className="footer"><a className="wordmark" href="#top"><span className="mark">H</span><span>HOROLOGY<small>THE WATCH MUSEUM</small></span></a><p>Independent educational project. No affiliation with or endorsement by any watch brand. All archetypes and illustrations are original.</p><span>DESIGNED TO EXPLORE TIME.</span></footer>
+    {selectedExhibit && <div className="modal-backdrop" onClick={() => setSelectedExhibit(null)}><section className="exhibit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={event => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedExhibit(null)} aria-label="Close exhibit details"><X /></button><p className="eyebrow">EXHIBIT {selectedExhibit.number} · {selectedExhibit.year}</p><h2 id="modal-title">{selectedExhibit.name}</h2><p className="modal-feature">{selectedExhibit.category}</p><p>{selectedExhibit.detail}</p><p className="modal-disclaimer">An original educational archetype. Not a replica of or an endorsement by a specific manufacturer.</p><a className="inline-link" href="#anatomy" onClick={() => setSelectedExhibit(null)}>EXPLORE WATCH COMPONENTS <ArrowRight size={15} /></a></section></div>}
   </div>;
 }
 
