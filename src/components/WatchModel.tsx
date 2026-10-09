@@ -118,7 +118,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
         </mesh>
       </group>
 
-      {/* Glossy black dial */}
+      {/* Deep green dial */}
       <mesh ref={dial} position={[0, 0, 0.125]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.865, 0.865, 0.035, 96]} />
         <meshStandardMaterial color={DIAL} metalness={0.2} roughness={0.55} transparent={Boolean(activePart && activePart !== "hands")} opacity={dim("hands")} />
@@ -197,7 +197,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
         </mesh>
       </group>
 
-      {/* Screw-down crown and protective shoulders at 3 o'clock */}
+      {/* Crown and protective shoulders at 3 o'clock */}
       {[-1, 1].map((side) => (
         <mesh key={side} position={[1.02, side * 0.19, -0.005]} rotation={[0, 0, side * 0.2]}>
           <boxGeometry args={[0.22, 0.17, 0.2]} />
