@@ -203,13 +203,13 @@ function App() {
             <div className="stage-index"><span>STUDY 001</span><span>DIVER ARCHETYPE</span></div>
             <img
               className="hero-watch-image"
-              src="/images/hero-watch.svg"
+              src="/images/hero-watch.jpg"
               width="1200"
               height="1400"
               fetchPriority="high"
               loading="eager"
               decoding="async"
-              alt="Conceptual stainless-steel skeleton mechanical watch with a dark open-work dial and polished multi-link bracelet"
+              alt="Stainless steel skeleton mechanical wristwatch with a polished multi-link bracelet, displayed on a warm cream background"
             />
             <a className="hero-model-link" href="#anatomy">INSPECT THE 3D MODEL <ArrowDown size={13} aria-hidden="true" /></a>
             <div className="stage-caption"><span>STAINLESS STEEL</span><span>CONCEPTUAL DESIGN STUDY</span></div>
