@@ -11,6 +11,9 @@ const exhibits = [
     category: 'ELAPSED-TIME BEZEL',
     detail: 'The bezel’s minute scale can mark the start of an interval. On a dive watch, it is a timing instrument: its direction and markings matter as much as its appearance.',
     copy: 'Bold minute marks and a one-way bezel make elapsed time readable at a glance.',
+    story: 'A dive-watch layout is built around a simple problem: underwater, elapsed time must be clear at a glance. The bezel gives the wearer a quick reference without navigating a menu or reading a small display.',
+    notice: ['The zero marker is aligned with the minute hand to begin timing.', 'The minute scale is separated from the hour markers.', 'The one-way bezel convention is a safety feature on many dive watches.'],
+    mechanism: 'Rotate the bezel so its zero marker meets the minute hand. As the hand moves, read elapsed minutes against the bezel scale. On many dive watches the bezel turns only counter-clockwise, so an accidental bump indicates more elapsed time rather than less.'
   },
   {
     number: '02',
@@ -19,6 +22,9 @@ const exhibits = [
     category: 'ELAPSED-TIME COUNTERS',
     detail: 'A chronograph uses pushers to start, stop, and reset a separate timing mechanism. Its subdials display elapsed intervals while the central hands continue to show the time.',
     copy: 'Three subdials record elapsed seconds and minutes without taking over the main time display.',
+    story: 'A chronograph adds a stopwatch function to a watch that still tells the time. The challenge is information design: elapsed time needs its own display, but the main dial must remain readable.',
+    notice: ['Pushers control start, stop, and reset on a typical chronograph.', 'Subdials separate elapsed-time readings from the main time.', 'Extra hands and scales make visual hierarchy especially important.'],
+    mechanism: 'A chronograph uses a start/stop control and a reset control to operate an elapsed-time mechanism. Depending on the design, a central seconds hand and smaller registers show seconds and minutes, while the regular hour and minute hands keep showing the current time.'
   },
   {
     number: '03',
@@ -27,6 +33,9 @@ const exhibits = [
     category: 'SECOND TIME ZONE',
     detail: 'A dedicated 24-hour hand can track a second time zone. Read against the 24-hour scale, it helps distinguish daytime from nighttime elsewhere.',
     copy: 'A fourth hand tracks a second time zone against a 24-hour scale.',
+    story: 'Travel creates a display problem: local time matters, but home time may matter too. A dedicated 24-hour hand keeps a second zone visible without requiring the wearer to reset the main hands.',
+    notice: ['The extra hand is read against a 24-hour scale.', 'A full rotation represents a complete day rather than twelve hours.', 'The 24-hour reading helps distinguish day from night in the second zone.'],
+    mechanism: 'A dedicated 24-hour hand makes one full rotation per day. Read it against a 24-hour bezel or chapter ring to track another time zone; some watches let the wearer adjust that hand independently, while others use a different setting arrangement.'
   },
 ];
 
@@ -65,9 +74,10 @@ function Header({ activeSection }: { activeSection: string }) {
         {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
       </button>
       <nav id="primary-navigation" className={open ? 'nav-links open' : 'nav-links'} onClick={() => setOpen(false)}>
-        <a className={activeSection === 'collection' ? 'active' : ''} href="#collection">COLLECTION</a>
         <a className={activeSection === 'anatomy' ? 'active' : ''} href="#anatomy">ANATOMY</a>
+        <a className={activeSection === 'collection' ? 'active' : ''} href="#collection">EXHIBITS</a>
         <a className={activeSection === 'timeline' ? 'active' : ''} href="#timeline">HISTORY</a>
+        <a className={activeSection === 'sources' ? 'active' : ''} href="#sources">SOURCES</a>
         <a className={activeSection === 'about' ? 'active nav-visit' : 'nav-visit'} href="#about">ABOUT</a>
       </nav>
     </header>
@@ -94,7 +104,7 @@ function App() {
 
     document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
-    const sectionElements = ['top', 'anatomy', 'collection', 'timeline', 'about']
+    const sectionElements = ['top', 'anatomy', 'collection', 'timeline', 'sources', 'about']
       .map((id) => document.getElementById(id))
       .filter((element): element is HTMLElement => Boolean(element));
 
@@ -183,8 +193,8 @@ function App() {
               <a className="text-link" href="#anatomy">OPEN THE CASE <ArrowDown size={15} aria-hidden="true" /></a>
             </div>
             <div className="hero-meta">
-              <div><strong>4 parts</strong><span>IN THE ANATOMY STUDY</span></div>
-              <div><strong>3 forms</strong><span>BUILT AROUND DIFFERENT USES</span></div>
+              <div><strong>4 components</strong><span>IN THE ANATOMY STUDY</span></div>
+              <div><strong>3 exhibits</strong><span>WITH DISTINCT FUNCTIONS</span></div>
             </div>
           </div>
 
@@ -321,6 +331,19 @@ function App() {
           </div>
         </section>
 
+        <section id="sources" className="sources section-pad">
+          <div className="section-heading reveal">
+            <div><p className="eyebrow">FURTHER READING</p><h2>Follow the <em>evidence.</em></h2></div>
+            <span className="section-count">SOURCES & REFERENCES</span>
+          </div>
+          <p className="body-copy muted sources-intro">The timeline is a short orientation, not a complete history. These references provide further context for portable timekeeping, balance springs, and quartz watches.</p>
+          <div className="source-list">
+            <a href="https://www.britannica.com/technology/watch" target="_blank" rel="noreferrer"><span>01 / ENCYCLOPEDIA</span><strong>Watch — Encyclopaedia Britannica</strong><span>General background on watch design and development <ArrowUpRight size={15} aria-hidden="true" /></span></a>
+            <a href="https://www.sciencemuseum.org.uk/objects-and-stories" target="_blank" rel="noreferrer"><span>02 / COLLECTION & STORIES</span><strong>Science Museum Group</strong><span>Objects and stories from the history of science and timekeeping <ArrowUpRight size={15} aria-hidden="true" /></span></a>
+            <a href="https://www.nist.gov/pml/time-and-frequency-division" target="_blank" rel="noreferrer"><span>03 / TIME STANDARDS</span><strong>NIST Time and Frequency Division</strong><span>Technical context for modern timekeeping and frequency measurement <ArrowUpRight size={15} aria-hidden="true" /></span></a>
+          </div>
+        </section>
+
         <section id="about" className="closing section-pad">
           <p className="eyebrow">HOROLOGY / AN INDEPENDENT STUDY</p>
           <h2>Start at the case.<br />Finish at the <em>hands.</em></h2>
@@ -353,8 +376,16 @@ function App() {
             <p className="eyebrow">STUDY {selectedExhibit.number} · {selectedExhibit.period}</p>
             <h2 id="modal-title">{selectedExhibit.name}</h2>
             <p className="modal-feature">{selectedExhibit.category}</p>
-            <p id="modal-description">{selectedExhibit.detail}</p>
-            <p className="modal-disclaimer">This is an original educational archetype, not a replica of a specific manufacturer’s design.</p>
+            <p id="modal-description">{selectedExhibit.story}</p>
+            <div className="modal-section">
+              <span className="note-index">HOW IT WORKS</span>
+              <p>{selectedExhibit.mechanism}</p>
+            </div>
+            <div className="modal-section">
+              <span className="note-index">WHAT TO NOTICE</span>
+              <ul>{selectedExhibit.notice.map((item) => <li key={item}>{item}</li>)}</ul>
+            </div>
+            <p className="modal-disclaimer">{selectedExhibit.detail} This is an original educational archetype, not a replica of a specific manufacturer’s design.</p>
             <a className="inline-link" href="#anatomy" onClick={() => setSelectedExhibit(null)}>VIEW THE COMPONENTS <ArrowRight size={15} aria-hidden="true" /></a>
           </section>
         </div>
