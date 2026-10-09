@@ -14,8 +14,8 @@ function Header() {
     <a className="wordmark" href="#top" aria-label="Horology home"><span className="mark">H</span><span>HOROLOGY<small>THE WATCH MUSEUM</small></span></a>
     <button className="mobile-menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
     <nav className={open ? 'nav-links open' : 'nav-links'} onClick={() => setOpen(false)}>
-      <a href="#collection">COLLECTION</a><a href="#anatomy">ANATOMY</a><a href="#timeline">HISTORY</a>
-      <a className="nav-visit" href="#about">ABOUT THE PROJECT <ArrowUpRight size={14} /></a>
+      <a href="#collection">THE COLLECTION</a><a href="#anatomy">CRAFTSMANSHIP</a><a href="#timeline">OUR STORY</a>
+      <a className="nav-visit" href="#about">ABOUT HOROLOGY <ArrowUpRight size={14} /></a>
     </nav>
   </header>;
 }
@@ -34,11 +34,11 @@ function App() {
     <main>
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-line" /> AN INDEPENDENT HOROLOGY EXPERIENCE · 001</p>
-          <h1>TIME IS<br /><em>ENGINEERED.</em></h1>
+          <p className="eyebrow"><span className="eyebrow-line" /> A CURATED STUDY OF TIMEPIECES · EST. 2026</p>
+          <h1>THE ART OF<br /><em>TIMEKEEPING.</em></h1>
           <p className="hero-desc">A closer look at the objects that turn precision into an art form. Explore the history, design, and mechanics behind iconic watches.</p>
-          <div className="hero-actions"><a className="button button-light" href="#collection">EXPLORE THE COLLECTION <ArrowRight size={16} /></a><a className="text-link" href="#anatomy">DISCOVER THE MECHANICS <ArrowDown size={15} /></a></div>
-          <div className="hero-meta"><div><strong>100+</strong><span>YEARS OF INNOVATION</span></div><div><strong>01 / 03</strong><span>FEATURED EXHIBITS</span></div></div>
+          <div className="hero-actions"><a className="button button-light" href="#collection">DISCOVER THE COLLECTION <ArrowRight size={16} /></a><a className="text-link" href="#anatomy">THE ART OF WATCHMAKING <ArrowDown size={15} /></a></div>
+          <div className="hero-meta"><div><strong>100+</strong><span>YEARS OF WATCHMAKING</span></div><div><strong>01 / 03</strong><span>FEATURED EXHIBITS</span></div></div>
         </div>
         <div className="hero-stage">
           <div className="stage-orbit orbit-one" /><div className="stage-orbit orbit-two" />
@@ -51,7 +51,7 @@ function App() {
 
       <section id="intro" className="intro section-pad reveal">
         <p className="eyebrow">BEYOND THE DIAL</p>
-        <div className="intro-grid"><h2>More than a way<br />to tell <em>time.</em></h2><div><p className="body-copy">A fine watch is a meeting point of engineering, material, and human ambition. Every surface has a purpose. Every movement is a small world of coordinated parts.</p><p className="body-copy muted">This independent digital museum is a study in watchmaking—not a store, and not an official brand website.</p><a href="#anatomy" className="inline-link">LOOK INSIDE THE WATCH <ArrowRight size={15} /></a></div></div>
+        <div className="intro-grid"><h2>Made to be<br /><em>remembered.</em></h2><div><p className="body-copy">A fine watch is a meeting point of engineering, material, and human ambition. Every surface has a purpose. Every movement is a small world of coordinated parts.</p><p className="body-copy muted">This independent digital museum is a study in watchmaking—not a store, and not an official brand website.</p><a href="#anatomy" className="inline-link">LOOK INSIDE THE WATCH <ArrowRight size={15} /></a></div></div>
       </section>
 
       <section id="anatomy" className="anatomy section-pad">
@@ -62,7 +62,7 @@ function App() {
       </section>
 
       <section id="collection" className="collection section-pad">
-        <div className="section-heading reveal"><div><p className="eyebrow">THE EXHIBITION</p><h2>Icons of <em>purpose.</em></h2></div><span className="section-count">01—03 / SELECTED PIECES</span></div>
+        <div className="section-heading reveal"><div><p className="eyebrow">THE CURATED COLLECTION</p><h2>Icons of <em>time.</em></h2></div><span className="section-count">01—03 / SELECTED PIECES</span></div>
         <div className="exhibit-grid">{exhibits.map(item => <article className="exhibit-card reveal" key={item.number}><div className="exhibit-art"><div className="art-ring" /><div className="art-watch"><div className="art-dial"><span className="art-hand hand-a" /><span className="art-hand hand-b" /><span className="art-pin" /></div></div><span className="art-serial">H / {item.number}</span><span className="art-year">{item.year}</span></div><div className="exhibit-info"><div className="exhibit-kicker"><span>{item.number} / {item.category}</span><span>{item.year}</span></div><h3>{item.name}</h3><p>{item.copy}</p><a href="#timeline" className="inline-link">EXPLORE THE STORY <ArrowUpRight size={15} /></a></div></article>)}</div>
       </section>
 
@@ -71,7 +71,7 @@ function App() {
         <div className="timeline-items"><div className="timeline-item reveal"><span>1905</span><div><h3>A new beginning</h3><p>Hans Wilsdorf establishes a watch business in London, focused on portable precision timekeeping.</p></div><Clock3 /></div><div className="timeline-item reveal"><span>1926</span><div><h3>Designed for the elements</h3><p>The Oyster case introduces an influential approach to protecting a wristwatch from dust and water.</p></div><Compass /></div><div className="timeline-item reveal"><span>1950s–60s</span><div><h3>Tools for a changing world</h3><p>Divers, pilots, explorers, and racers inspire purpose-built watch designs for specialized needs.</p></div><Clock3 /></div><div className="timeline-item reveal"><span>TODAY</span><div><h3>Mechanics meets culture</h3><p>Mechanical watches remain enduring objects of craft, engineering, identity, and design.</p></div><Compass /></div></div>
       </section>
 
-      <section id="about" className="closing section-pad"><p className="eyebrow">THE ART OF KEEPING TIME</p><h2>Look closer.<br /><em>Time rewards it.</em></h2><a className="button button-light" href="#top">RETURN TO THE EXHIBIT <ArrowUpRight size={16} /></a><div className="closing-orbit" /></section>
+      <section id="about" className="closing section-pad"><p className="eyebrow">THE ART OF KEEPING TIME</p><h2>Look closer.<br /><em>Time rewards it.</em></h2><a className="button button-light" href="#top">RETURN TO THE TOP <ArrowUpRight size={16} /></a><div className="closing-orbit" /></section>
     </main>
     <footer className="footer"><a className="wordmark" href="#top"><span className="mark">H</span><span>HOROLOGY<small>THE WATCH MUSEUM</small></span></a><p>An independent educational project. Not affiliated with Rolex SA.</p><span>DESIGNED TO EXPLORE TIME.</span></footer>
   </div>;
