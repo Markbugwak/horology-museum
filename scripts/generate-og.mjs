@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const width = 1200;
@@ -23,5 +24,5 @@ await sharp({
     { input: overlay, left: 0, top: 0 },
   ])
   .png({ compressionLevel: 9 })
-  .toFile(new URL('../public/images/og-horology.png', import.meta.url));
+  .toFile(fileURLToPath(new URL('../public/images/og-horology.png', import.meta.url)));
 process.stdout.write('Generated public/images/og-horology.png (1200×630)\n');
