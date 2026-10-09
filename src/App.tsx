@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { ArrowDown, ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react';
-import WatchModel from './components/WatchModel';
+const WatchModel = lazy(() => import('./components/WatchModel'));
 
 const exhibits = [
   { number: '01', name: 'The Diver', year: '1950s', category: 'ROTATING TIMING BEZEL', detail: 'A purpose-built archetype for underwater legibility, with a minute track, luminous markers, and a high-contrast dial.', copy: 'A clear, rugged instrument designed around elapsed time and readability in low light.' },
@@ -24,6 +24,7 @@ function App() {
   const [active, setActive] = useState(0);
   const [activeSection, setActiveSection] = useState('top');
   const [selectedExhibit, setSelectedExhibit] = useState<(typeof exhibits)[number] | null>(null);
+  const [anatomyModelReady, setAnatomyModelReady] = useState(false);
   useEffect(() => {
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('is-visible');
@@ -42,6 +43,18 @@ function App() {
     sections.forEach(section => navObserver.observe(section));
     return () => { reveal.disconnect(); navObserver.disconnect(); };
   }, []);
+  useEffect(() => {
+    const section = document.getElementById('anatomy');
+    if (!section) return;
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        setAnatomyModelReady(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '320px 0px' });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
   return <div>
     <Header activeSection={activeSection} />
     <main>
@@ -56,7 +69,8 @@ function App() {
         <div className="hero-stage">
           <div className="stage-orbit orbit-one" /><div className="stage-orbit orbit-two" />
           <div className="stage-index"><span>FIG. 001</span><span>MECHANICAL STUDY</span></div>
-          <WatchModel />
+          <img className="hero-watch-image" src="/images/hero-watch.svg" width="1200" height="1400" fetchPriority="high" loading="eager" decoding="async" alt="A conceptual mechanical dive watch with a brushed steel bracelet, deep green dial, gold bezel ring, and contrasting hands" />
+          <a className="hero-model-link" href="#anatomy">EXPLORE THE INTERACTIVE MODEL <ArrowDown size={13} /></a>
           <div className="stage-caption"><span>01 — THE INSTRUMENT</span><span>STAINLESS STEEL / AUTOMATIC</span></div>
         </div>
       </section>
@@ -70,7 +84,7 @@ function App() {
         <div className="anatomy-head reveal"><div><p className="eyebrow">A STUDY IN COMPONENTS</p><h2>Every part has<br />a <em>purpose.</em></h2></div><p className="body-copy muted">Scroll through the section and watch the layers separate. Drag the model to inspect it from another angle.</p></div>
         <div className="anatomy-grid"><div className="component-list">
           {[['01','THE BEZEL','Frames the dial and can serve as a timing scale.'],['02','THE CRYSTAL','A transparent barrier protecting the dial.'],['03','THE DIAL & HANDS','The display layer: designed for fast, clear reading.'],['04','THE CASE','The protective shell that houses the mechanism.']].map((part, i) => <button key={part[0]} onClick={() => setActive(i)} className={active === i ? 'component-row selected' : 'component-row'}><span>{part[0]}</span><span><strong>{part[1]}</strong><small>{part[2]}</small></span><ArrowUpRight size={16} /></button>)}
-        </div><div className="anatomy-model"><div className="anatomy-model-frame"><WatchModel activePart={(["bezel", "crystal", "dial", "case"] as const)[active]} showHint={false} /></div><p className="anatomy-model-caption">SCROLL TO SEPARATE LAYERS · DRAG TO INSPECT</p></div><div className="anatomy-note"><span className="note-index">FIELD NOTE / 0{active + 1}</span><h3>{['A measured edge.','Clarity under pressure.','The face of precision.','Protection by design.'][active]}</h3><p>{['The bezel creates a strong visual frame and, on many tool watches, helps track elapsed time.','A watch crystal must balance transparency with resistance to everyday impact and abrasion.','Dial layout, contrast, indices, and hand geometry work together to make time readable at a glance.','The case protects delicate components from dust, moisture, and physical contact while defining the watch silhouette.'][active]}</p><div className="note-rule" /><span className="note-foot">INTERACTIVE MODEL · CONCEPTUAL STUDY</span></div></div>
+        </div><div className="anatomy-model"><div className="anatomy-model-frame"><Suspense fallback={<div className="watch-fallback"><strong>MECHANICAL STUDY</strong><span>Preparing the interactive model…</span></div>}>{anatomyModelReady ? <WatchModel activePart={(["bezel", "crystal", "hands", "case"] as const)[active]} showHint={false} /> : <div className="watch-fallback"><strong>MECHANICAL STUDY</strong><span>The interactive model loads as you approach this section.</span></div>}</Suspense></div><p className="anatomy-model-caption">SCROLL TO SEPARATE LAYERS · DRAG TO INSPECT</p></div><div className="anatomy-note"><span className="note-index">FIELD NOTE / 0{active + 1}</span><h3>{['A measured edge.','Clarity under pressure.','The face of precision.','Protection by design.'][active]}</h3><p>{['The bezel creates a strong visual frame and, on many tool watches, helps track elapsed time.','A watch crystal must balance transparency with resistance to everyday impact and abrasion.','Dial layout, contrast, indices, and hand geometry work together to make time readable at a glance.','The case protects delicate components from dust, moisture, and physical contact while defining the watch silhouette.'][active]}</p><div className="note-rule" /><span className="note-foot">INTERACTIVE MODEL</span><span className="note-foot">CONCEPTUAL STUDY</span></div></div>
       </section>
 
       <section id="collection" className="collection section-pad">
