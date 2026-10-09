@@ -172,13 +172,13 @@ img { display: block; max-width: 100%; }
   height: min(74vh, 690px);
   min-height: 470px;
   overflow: hidden;
-  background: #080b10;
+  background: #f0eee6;
 }
 .hero-stage::before {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background: radial-gradient(ellipse at 52% 44%, rgba(173,153,111,.13), transparent 48%);
+  background: radial-gradient(ellipse at 52% 44%, rgba(255,255,255,.72), transparent 62%);
   content: '';
   pointer-events: none;
 }
@@ -218,7 +218,7 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
 }
 .stage-index { top: 5%; }
-.stage-caption { bottom: 3.5%; color: #b6b09f; }
+.stage-caption { bottom: 3.5%; color: #777568; }
 .hero-model-link {
   position: absolute;
   z-index: 3;
