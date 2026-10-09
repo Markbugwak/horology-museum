@@ -234,3 +234,19 @@ html { scroll-padding-top: 92px; }
   .anatomy-model-frame { height: 360px; }
   .anatomy-note { grid-column: auto; order: 3; }
 }
+
+
+/* Final readability tuning for small labels and secondary copy */
+.eyebrow { font-size: 10px; color: #656257; }
+.hero-meta span, .stage-index, .stage-caption, .section-count, .exhibit-kicker, .note-index, .note-foot { font-size: 9px; }
+.footer p, .footer>span { font-size: 9px; color: #5f6158; }
+.timeline-item>span { font-size: 10px; }
+.timeline-item p, .exhibit-info p, .anatomy-note p { font-size: 12px; }
+.collection .eyebrow, .collection .section-count, .collection .exhibit-kicker { color: #d5d0c3; }
+.intro .muted, .anatomy-head .body-copy, .timeline-intro .body-copy { color: #62645b; }
+@media (max-width: 680px) {
+  .eyebrow { font-size: 9px; }
+  .stage-index, .stage-caption, .exhibit-kicker { font-size: 8px; }
+  .timeline-item p, .exhibit-info p, .anatomy-note p { font-size: 12px; }
+  .footer p { font-size: 9px; }
+}
