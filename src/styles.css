@@ -204,7 +204,6 @@ img { display: block; max-width: 100%; }
   transform: translate(-50%, -50%);
 }
 .orbit-one { width: min(31vw, 410px); }
-.orbit-two { display: none; }
 .stage-index, .stage-caption {
   position: absolute;
   z-index: 2;
@@ -507,7 +506,6 @@ img { display: block; max-width: 100%; }
   .hero-stage { height: min(112vw, 440px); min-height: 335px; }
   .hero-watch-image { padding: 4% 2% 24%; }
   .orbit-one { width: 70vw; }
-  .orbit-two { display: none; }
   .stage-index { top: 4%; font-size: 7px; }
   .stage-caption { bottom: 3.5%; font-size: 6px; }
   .hero-model-link { bottom: 8%; padding: 9px 10px; font-size: 7px; }
