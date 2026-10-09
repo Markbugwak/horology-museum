@@ -9,40 +9,40 @@ const exhibits = [
     name: 'The Diver',
     period: 'DIVE WATCH STUDY',
     category: 'ELAPSED-TIME BEZEL',
-    detail: 'A clear minute scale and high-contrast markers make elapsed time easy to read. On a real dive watch, the bezel is a practical timing tool—not merely decoration.',
-    copy: 'A dial built for quick reading, with elapsed time kept close at hand.',
+    detail: 'The bezel’s minute scale can mark the start of an interval. On a dive watch, it is a timing instrument: its direction and markings matter as much as its appearance.',
+    copy: 'Bold minute marks and a one-way bezel make elapsed time readable at a glance.',
   },
   {
     number: '02',
     name: 'The Racer',
     period: 'CHRONOGRAPH STUDY',
     category: 'ELAPSED-TIME COUNTERS',
-    detail: 'A chronograph adds a separate timing function to a conventional time display. Subdials record elapsed intervals, while the main hands continue to show the time of day.',
-    copy: 'A layered dial separates ordinary time from measured intervals.',
+    detail: 'A chronograph uses pushers to start, stop, and reset a separate timing mechanism. Its subdials display elapsed intervals while the central hands continue to show the time.',
+    copy: 'Three subdials record elapsed seconds and minutes without taking over the main time display.',
   },
   {
     number: '03',
     name: 'The Traveler',
     period: 'DUAL-TIME STUDY',
     category: 'SECOND TIME ZONE',
-    detail: 'A second hour hand and a 24-hour scale can show another time zone alongside local time. The layout is useful when coordinating across distant places.',
-    copy: 'A second time zone sits alongside local time, not in place of it.',
+    detail: 'A dedicated 24-hour hand can track a second time zone. Read against the 24-hour scale, it helps distinguish daytime from nighttime elsewhere.',
+    copy: 'A fourth hand tracks a second time zone against a 24-hour scale.',
   },
 ];
 
 const components = [
-  { number: '01', title: 'THE BEZEL', summary: 'Frames the dial; on a timing watch, its scale can track elapsed minutes.', heading: 'A scale with a job.', note: 'A timing bezel lets the wearer mark a starting point and read elapsed time at a glance. Its markings matter only when they remain legible and easy to align.' },
-  { number: '02', title: 'THE CRYSTAL', summary: 'A clear cover that protects the dial from contact and everyday wear.', heading: 'Clarity is structural.', note: 'The crystal is part of the watch’s protection system. Material, shape, thickness, and coatings affect how clearly the dial can be read and how well the surface withstands wear.' },
-  { number: '03', title: 'THE DIAL & HANDS', summary: 'Contrast, markers, and hand shapes turn movement into readable information.', heading: 'Designed to be read.', note: 'Dial design is a practical exercise in hierarchy. Hand length, marker position, contrast, and spacing should make the time clear before decorative details ask for attention.' },
-  { number: '04', title: 'THE CASE', summary: 'The outer shell supports the watch and protects its internal parts.', heading: 'Protection by design.', note: 'The case holds the movement and provides the structure for the crystal, crown, and back. Its proportions also determine how the watch sits on the wrist.' },
+  { number: '01', title: 'THE BEZEL', summary: 'Surrounds the crystal. A marked, rotating bezel can measure elapsed minutes without using the crown.', heading: 'Mark the elapsed minutes.', note: 'Align the bezel’s zero marker with the minute hand at the start of an interval. The elapsed minutes can then be read from the hand’s position against the bezel scale.' },
+  { number: '02', title: 'THE CRYSTAL', summary: 'The transparent cover above the dial. Its material and coatings affect scratch resistance, reflections, and legibility.', heading: 'A clear barrier, not decoration.', note: 'A crystal is commonly made from mineral glass, synthetic sapphire, or acrylic. Each material trades off scratch resistance, impact behavior, cost, and ease of polishing.' },
+  { number: '03', title: 'THE DIAL & HANDS', summary: 'The display: indices, numerals, and hands translate the movement’s output into a readable time.', heading: 'The display has a hierarchy.', note: 'The minute hand should reach the minute track; the hour hand should point clearly between the markers. Contrast and spacing help the wearer read the time without searching the dial.' },
+  { number: '04', title: 'THE CASE', summary: 'Houses the movement and joins the crystal, crown, and caseback into one protective structure.', heading: 'The structure around the movement.', note: 'The case supports the crystal, crown, and caseback while shielding the movement. Lug shape, thickness, and diameter affect how the watch sits on the wrist.' },
 ];
 
 const timeline = [
-  { date: 'c. 1500', title: 'Time becomes portable', copy: 'Spring-driven portable clocks emerge in Europe, freeing timekeeping from a fixed wall or tower.' },
-  { date: '1675', title: 'A spring improves the balance', copy: 'The balance spring helps regulate a watch’s oscillation, opening the way to more consistent timekeeping.' },
-  { date: 'EARLY 1900s', title: 'The wristwatch finds its place', copy: 'Wristwatches become increasingly practical for timing, coordination, and situations where a pocket watch is inconvenient.' },
-  { date: '1969', title: 'Quartz changes the equation', copy: 'Quartz wristwatches reach the market, bringing a different approach to accuracy, maintenance, and mass production.' },
-  { date: 'TODAY', title: 'Mechanics remains a craft', copy: 'Mechanical watches continue to be studied for movement design, finishing, repair, and the relationship between form and function.' },
+  { date: 'c. 1500', title: 'Portable clocks appear', copy: 'Spring-powered clocks made timekeeping portable, although early examples were bulky and far less accurate than later watches.' },
+  { date: '1675', title: 'The balance spring', copy: 'The balance spring, developed in the 17th century, made the balance’s oscillations more regular and improved timekeeping.' },
+  { date: 'EARLY 1900s', title: 'Wristwatches gain ground', copy: 'Wristwatches spread from specialized uses into wider civilian life during the early 20th century, helped by their convenience for checking time on the move.' },
+  { date: '1969', title: 'Quartz reaches the wrist', copy: 'Commercial quartz wristwatches arrive in 1969. Their electronic timekeeping offered far greater accuracy with less routine adjustment than most mechanical watches.' },
+  { date: 'TODAY', title: 'Mechanical watchmaking continues', copy: 'Mechanical watches remain objects of study for their gear trains, escapements, finishing, servicing, and the engineering choices visible through the case.' },
 ];
 
 function Header({ activeSection }: { activeSection: string }) {
@@ -134,7 +134,28 @@ function App() {
 
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setSelectedExhibit(null);
+      if (event.key === 'Escape') {
+        setSelectedExhibit(null);
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        const dialog = document.querySelector<HTMLElement>('.exhibit-modal');
+        if (!dialog) return;
+        const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     document.body.style.overflow = 'hidden';
@@ -187,11 +208,11 @@ function App() {
         </section>
 
         <section id="intro" className="intro section-pad reveal">
-          <p className="eyebrow">WHY THE DETAILS MATTER</p>
+          <p className="eyebrow">FORM FOLLOWS FUNCTION</p>
           <div className="intro-grid">
-            <h2>Small parts.<br /><em>Clear purpose.</em></h2>
+            <h2>A compact instrument.<br /><em>Carefully arranged.</em></h2>
             <div>
-              <p className="body-copy">A watch is a compact system. The case protects it, the crystal keeps the display visible, and the dial turns the movement into information a person can read.</p>
+              <p className="body-copy">A watch is a chain of practical decisions. The case protects the movement, the crystal shields the display, and the dial gives the hands and markers a clear job.</p>
               <p className="body-copy muted">HOROLOGY is an independent educational project. Its illustrations and interactive model are conceptual studies, not replicas of a particular manufacturer’s watch.</p>
               <a href="#anatomy" className="inline-link">STUDY THE COMPONENTS <ArrowRight size={15} aria-hidden="true" /></a>
             </div>
@@ -201,7 +222,7 @@ function App() {
         <section id="anatomy" className="anatomy section-pad">
           <div className="anatomy-head reveal">
             <div><p className="eyebrow">ANATOMY OF A WATCH</p><h2>Look beneath<br /><em>the surface.</em></h2></div>
-            <p className="body-copy muted">Choose a component to highlight it. Scroll through this section to separate the layers, then drag the model to inspect its shape.</p>
+            <p className="body-copy muted">Select a part to highlight it. Scroll to separate the outer layers, or drag the model to inspect the case from another angle.</p>
           </div>
 
           <div className="anatomy-grid">
@@ -245,7 +266,7 @@ function App() {
 
         <section id="collection" className="collection section-pad">
           <div className="section-heading reveal">
-            <div><p className="eyebrow">THREE DESIGN STUDIES</p><h2>Different needs.<br /><em>Different dials.</em></h2></div>
+            <div><p className="eyebrow">THREE DESIGN STUDIES</p><h2>Three functions.<br /><em>Three layouts.</em></h2></div>
             <span className="section-count">01—03 / ORIGINAL ARCHETYPES</span>
           </div>
           <div className="exhibit-grid">
@@ -277,7 +298,7 @@ function App() {
                   <div className="exhibit-kicker"><span>STUDY {item.number}</span><span>{item.period}</span></div>
                   <h3>{item.name}</h3>
                   <p>{item.copy}</p>
-                  <span className="inline-link">READ THE STUDY <ArrowRight size={15} aria-hidden="true" /></span>
+                  <span className="inline-link">OPEN STUDY NOTES <ArrowRight size={15} aria-hidden="true" /></span>
                 </div>
               </button>
             ))}
@@ -288,8 +309,8 @@ function App() {
           <div className="timeline-intro reveal">
             <p className="eyebrow">A SHORT HISTORY</p>
             <h2>How time<br /><em>became portable.</em></h2>
-            <p className="body-copy muted">A few turning points in the long effort to make timekeeping more accurate, more useful, and easier to carry.</p>
-            <div className="timeline-fact"><span>THE THREAD THROUGH IT</span><p>Accuracy, legibility, and portability keep returning as design problems. Each generation of watchmaking responds to a different need.</p></div>
+            <p className="body-copy muted">Five milestones in the shift from portable clocks to modern wristwatches.</p>
+            <div className="timeline-fact"><span>A RECURRING DESIGN PROBLEM</span><p>Accuracy, readability, and portability rarely improve together by accident. Each is a set of engineering choices—and often a compromise.</p></div>
           </div>
           <div className="timeline-items">
             {timeline.map((item) => (
@@ -303,8 +324,8 @@ function App() {
 
         <section id="about" className="closing section-pad">
           <p className="eyebrow">HOROLOGY / AN INDEPENDENT STUDY</p>
-          <h2>A watch is more<br />than its <em>dial.</em></h2>
-          <a className="button button-light" href="#collection">RETURN TO THE STUDIES <ArrowRight size={16} aria-hidden="true" /></a>
+          <h2>Start at the case.<br />Finish at the <em>hands.</em></h2>
+          <a className="button button-light" href="#collection">BACK TO THE COLLECTION <ArrowRight size={16} aria-hidden="true" /></a>
           <div className="closing-orbit" aria-hidden="true" />
         </section>
       </main>
@@ -336,7 +357,7 @@ function App() {
             <p className="modal-feature">{selectedExhibit.category}</p>
             <p id="modal-description">{selectedExhibit.detail}</p>
             <p className="modal-disclaimer">This is an original educational archetype, not a replica of a specific manufacturer’s design.</p>
-            <a className="inline-link" href="#anatomy" onClick={() => setSelectedExhibit(null)}>EXPLORE THE COMPONENTS <ArrowRight size={15} aria-hidden="true" /></a>
+            <a className="inline-link" href="#anatomy" onClick={() => setSelectedExhibit(null)}>VIEW THE COMPONENTS <ArrowRight size={15} aria-hidden="true" /></a>
           </section>
         </div>
       )}
