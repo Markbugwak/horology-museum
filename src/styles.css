@@ -384,3 +384,7 @@ html { scroll-padding-top: 92px; }
  .hero-stage .hero-model-link { transition:none; }
  .hero-stage .hero-watch-image { animation:none!important; transform:none!important; }
 }
+
+@keyframes hero-watch-drift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
+.hero-stage .hero-watch-image { animation:hero-watch-drift 8s ease-in-out infinite; }
+@media(prefers-reduced-motion:reduce) { .hero-stage .hero-watch-image { animation:none!important; } }
