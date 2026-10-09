@@ -51,7 +51,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
 
   return (
     <group ref={group} rotation={[0.12, -0.32, -0.08]} scale={1.18}>
-      {/* Three-piece Oyster-style bracelet: individual links, brushed outer links and polished centre links */}
+      {/* Three-piece articulated bracelet with individually modelled steel links. */}
       {[-1, 1].map((side) => (
         <group key={side} position={[0, 0, -0.025]}>
           {Array.from({ length: 7 }, (_, i) => {
@@ -155,11 +155,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
         })}
       </group>
 
-      {/* Dial lettering, kept subtle like a real instrument dial */}
-      <Text position={[0, 0.42, 0.205]} fontSize={0.105} color="#e6e8df" anchorX="center" anchorY="middle" letterSpacing={0.08} fontWeight={700}>HOROLOGY</Text>
-      <Text position={[0, 0.30, 0.205]} fontSize={0.044} color="#cbd1c9" anchorX="center" anchorY="middle" letterSpacing={0.03}>MECHANICAL STUDY</Text>
-      <Text position={[0, -0.37, 0.205]} fontSize={0.052} color="#d4d8d0" anchorX="center" anchorY="middle" letterSpacing={0.02}>DIVER</Text>
-      <Text position={[0, -0.46, 0.205]} fontSize={0.032} color="#aeb9b0" anchorX="center" anchorY="middle">AUTOMATIC</Text>
+      {/* Keep the dial free of invented manufacturer lettering. */}
 
       {/* Date window and raised cyclops magnifier at 3 o'clock */}
       <mesh position={[0.53, 0.02, 0.211]}>
@@ -174,7 +170,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
 
       {/* Three central hands and pinion */}
       <group ref={hands} position={[0, 0, 0.205]}>
-        {/* Mercedes-style hour hand */}
+        {/* Luminous hour hand with a geometric counterweight. */}
         <group rotation={[0, 0, -0.72]}>
           <mesh position={[0, 0.16, 0.025]}>
             <boxGeometry args={[0.07, 0.32, 0.025]} />
