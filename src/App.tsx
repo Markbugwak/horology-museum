@@ -61,7 +61,7 @@ function App() {
       <section id="top" className="hero">
         <div className="hero-copy">
           <p className="eyebrow"><span className="eyebrow-line" /> A CURATED STUDY OF TIMEPIECES · EST. 2026</p>
-          <h1>THE ART OF<br /><em>TIMEKEEPING.</em></h1>
+          <h1>THE ART OF<br /><em>Timekeeping.</em></h1>
           <p className="hero-desc">A closer look at the objects that turn precision into an art form. Explore the history, design, and mechanics behind iconic watches.</p>
           <div className="hero-actions"><a className="button button-light" href="#collection">DISCOVER THE COLLECTION <ArrowRight size={16} /></a><a className="text-link" href="#anatomy">THE ART OF WATCHMAKING <ArrowDown size={15} /></a></div>
           <div className="hero-meta"><div><strong>Centuries</strong><span>OF MECHANICAL INGENUITY</span></div><div><strong>Three</strong><span>ORIGINAL WATCH ARCHETYPES</span></div></div>
