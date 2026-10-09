@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { ContactShadows, Environment, OrbitControls, RoundedBox, Sparkles, Text } from '@react-three/drei';
+import { ContactShadows, Environment, OrbitControls, RoundedBox, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 const STEEL = '#8A929A';
