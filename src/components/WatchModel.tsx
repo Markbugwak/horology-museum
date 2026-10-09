@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { ContactShadows, Environment, OrbitControls, Sparkles, Text } from '@react-three/drei';
+import { ContactShadows, Environment, OrbitControls, RoundedBox, Sparkles, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 const STEEL = '#b9c2ca';
@@ -12,7 +12,7 @@ function SteelMaterial({ color = STEEL, roughness = 0.24 }: { color?: string; ro
   return <meshStandardMaterial color={color} metalness={0.94} roughness={roughness} />;
 }
 
-function WatchParts() {
+function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
   const group = useRef<THREE.Group>(null);
   const bezel = useRef<THREE.Group>(null);
   const crystal = useRef<THREE.Mesh>(null);
@@ -37,7 +37,7 @@ function WatchParts() {
 
   useFrame((state) => {
     const e = THREE.MathUtils.clamp(explode, 0, 1);
-    if (group.current) group.current.position.y = Math.sin(state.clock.elapsedTime * 0.65) * 0.035;
+    if (group.current) group.current.position.y = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
     if (bezel.current) bezel.current.position.z = 0.245 + e * 0.72;
     if (crystal.current) crystal.current.position.z = 0.32 + e * 1.08;
     if (dial.current) dial.current.position.z = 0.125 + e * 0.2;
@@ -56,7 +56,7 @@ function WatchParts() {
               <group key={i} position={[0, y, 0]}>
                 {[-1, 0, 1].map((column) => (
                   <mesh key={column} position={[column * 0.235, 0, column === 0 ? 0.012 : 0]}>
-                    <boxGeometry args={[column === 0 ? 0.22 : 0.215, 0.218, column === 0 ? 0.115 : 0.095]} />
+                    <RoundedBox args={[column === 0 ? 0.22 : 0.215, 0.218, column === 0 ? 0.115 : 0.095]} radius={0.025} smoothness={3} />
                     <SteelMaterial color={column === 0 ? '#dce1e5' : '#9da8b1'} roughness={column === 0 ? 0.17 : 0.3} />
                   </mesh>
                 ))}
@@ -83,7 +83,7 @@ function WatchParts() {
       {/* Lugs that visually connect the case to the bracelet */}
       {[-1, 1].map((side) => [-1, 1].map((x) => (
         <mesh key={`${side}-${x}`} position={[x * 0.56, side * 0.98, -0.025]} rotation={[0, 0, side * x * -0.12]}>
-          <boxGeometry args={[0.32, 0.48, 0.16]} />
+          <RoundedBox args={[0.32, 0.48, 0.16]} radius={0.055} smoothness={4} />
           <SteelMaterial color="#aab4bd" roughness={0.22} />
         </mesh>
       )))}
@@ -230,21 +230,30 @@ function WatchParts() {
 }
 
 export default function WatchModel() {
+  const [reducedMotion, setReducedMotion] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
   return (
-    <div className="watch-canvas">
-      <Canvas camera={{ position: [3.15, 2.7, 5.8], fov: 34 }} dpr={[1, 1.75]}>
+    <div className="watch-canvas" role="img" aria-label="Interactive three-dimensional conceptual dive watch with a steel bracelet, marked rotating bezel, luminous dial indices, and three hands">
+      <Canvas fallback={<div className="watch-fallback"><strong>MECHANICAL STUDY</strong><span>Three-dimensional preview is unavailable in this browser.</span></div>} camera={{ position: [3.05, 2.25, 8.35], fov: 38 }} dpr={[1, 1.5]}>
         <color attach="background" args={['#0a0d11']} />
         <ambientLight intensity={1.0} />
-        <spotLight position={[3.5, 5, 6]} intensity={68} angle={0.42} penumbra={0.85} />
+        <spotLight position={[3.5, 5, 6]} intensity={52} angle={0.42} penumbra={0.85} />
+        <directionalLight position={[-4, 1, 4]} intensity={2.2} color="#d9c69a" />
         <pointLight position={[-4, -1, 3]} intensity={22} color="#8abbd9" />
         <pointLight position={[0, 3, -3]} intensity={12} color="#d7dfeb" />
-        <WatchParts />
-        <Sparkles count={28} scale={5} size={1} speed={0.18} opacity={0.2} color="#a5c7d9" />
-        <ContactShadows position={[0, -2.35, 0]} opacity={0.42} scale={6} blur={2.5} far={4} />
+        <WatchParts reducedMotion={reducedMotion} />
+        {!reducedMotion && <Sparkles count={16} scale={4.5} size={0.8} speed={0.12} opacity={0.14} color="#a5c7d9" />}
+        <ContactShadows position={[0, -2.15, 0]} opacity={0.36} scale={5.2} blur={2.2} far={4} />
         <Environment preset="studio" />
-        <OrbitControls enablePan={false} minDistance={3.6} maxDistance={8} minPolarAngle={0.45} maxPolarAngle={2.5} />
+        <OrbitControls enablePan={false} enableDamping={!reducedMotion} dampingFactor={0.08} minDistance={5.5} maxDistance={10} minPolarAngle={0.45} maxPolarAngle={2.5} />
       </Canvas>
-      <span className="drag-hint">DRAG TO ROTATE · SCROLL TO EXPLORE</span>
+      <span className="drag-hint">DRAG TO ROTATE · SCROLL THE PAGE TO EXPLORE</span>
     </div>
   );
 }
