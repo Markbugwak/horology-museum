@@ -3,16 +3,17 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { ContactShadows, Environment, OrbitControls, RoundedBox, Sparkles, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
-const STEEL = '#b9c2ca';
-const GOLD = '#e7d6a1';
-const DIAL = '#07151b';
-const BEZEL = '#102e2b';
+const STEEL = '#8A929A';
+const GOLD = '#B89A5E';
+const DIAL = '#0F2A26';
+const BEZEL = '#0A1B18';
+type WatchPartKey = 'bezel' | 'crystal' | 'dial' | 'case';
 
-function SteelMaterial({ color = STEEL, roughness = 0.24 }: { color?: string; roughness?: number }) {
-  return <meshStandardMaterial color={color} metalness={0.94} roughness={roughness} />;
+function SteelMaterial({ color = STEEL, roughness = 0.38 }: { color?: string; roughness?: number }) {
+  return <meshPhysicalMaterial color={color} metalness={1} roughness={roughness} clearcoat={0.18} clearcoatRoughness={0.34} />;
 }
 
-function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
+function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boolean; activePart?: WatchPartKey }) {
   const group = useRef<THREE.Group>(null);
   const bezel = useRef<THREE.Group>(null);
   const crystal = useRef<THREE.Mesh>(null);
@@ -38,15 +39,15 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
   useFrame((state) => {
     const e = THREE.MathUtils.clamp(explode, 0, 1);
     if (group.current) group.current.position.y = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
-    if (bezel.current) bezel.current.position.z = 0.245 + e * 0.72;
-    if (crystal.current) crystal.current.position.z = 0.32 + e * 1.08;
-    if (dial.current) dial.current.position.z = 0.125 + e * 0.2;
-    if (hands.current) hands.current.position.z = 0.205 + e * 0.46;
-    if (markers.current) markers.current.position.z = 0.18 + e * 0.32;
+    if (bezel.current) bezel.current.position.z = 0.245 + e * 0.98 + (activePart === "bezel" ? 0.16 : 0);
+    if (crystal.current) crystal.current.position.z = 0.32 + e * 1.28 + (activePart === "crystal" ? 0.22 : 0);
+    if (dial.current) dial.current.position.z = 0.125 + e * 0.3 + (activePart === "dial" ? 0.12 : 0);
+    if (hands.current) hands.current.position.z = 0.205 + e * 0.52 + (activePart === "dial" ? 0.13 : 0);
+    if (markers.current) markers.current.position.z = 0.18 + e * 0.36 + (activePart === "dial" ? 0.13 : 0);
   });
 
   return (
-    <group ref={group} rotation={[0.12, -0.32, -0.08]} scale={1.08}>
+    <group ref={group} rotation={[0.12, -0.32, -0.08]} scale={1.18}>
       {/* Three-piece Oyster-style bracelet: individual links, brushed outer links and polished centre links */}
       {[-1, 1].map((side) => (
         <group key={side} position={[0, 0, -0.025]}>
@@ -57,12 +58,12 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
                 {[-1, 0, 1].map((column) => (
                   <mesh key={column} position={[column * 0.235, 0, column === 0 ? 0.012 : 0]}>
                     <RoundedBox args={[column === 0 ? 0.22 : 0.215, 0.218, column === 0 ? 0.115 : 0.095]} radius={0.025} smoothness={3} />
-                    <SteelMaterial color={column === 0 ? '#dce1e5' : '#9da8b1'} roughness={column === 0 ? 0.17 : 0.3} />
+                    <SteelMaterial color={column === 0 ? '#7C848C' : '#68727B'} roughness={column === 0 ? 0.38 : 0.44} />
                   </mesh>
                 ))}
                 <mesh position={[0, side * 0.105, -0.005]}>
                   <boxGeometry args={[0.69, 0.018, 0.105]} />
-                  <SteelMaterial color="#737f88" roughness={0.32} />
+                  <SteelMaterial color="#3E444A" roughness={0.48} />
                 </mesh>
               </group>
             );
@@ -77,14 +78,14 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
       </mesh>
       <mesh position={[0, 0, -0.005]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[1.055, 1.055, 0.22, 96]} />
-        <SteelMaterial color="#c1c9d0" roughness={0.2} />
+        <SteelMaterial color={activePart === "case" ? "#B89A5E" : "#8A929A"} roughness={0.3} />
       </mesh>
 
       {/* Lugs that visually connect the case to the bracelet */}
       {[-1, 1].map((side) => [-1, 1].map((x) => (
         <mesh key={`${side}-${x}`} position={[x * 0.56, side * 0.98, -0.025]} rotation={[0, 0, side * x * -0.12]}>
           <RoundedBox args={[0.32, 0.48, 0.16]} radius={0.055} smoothness={4} />
-          <SteelMaterial color="#aab4bd" roughness={0.22} />
+          <SteelMaterial color={activePart === "case" ? "#B89A5E" : "#8A929A"} roughness={0.3} />
         </mesh>
       )))}
 
@@ -92,15 +93,15 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
       <group ref={bezel} position={[0, 0, 0.245]}>
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[1.025, 1.025, 0.13, 96]} />
-          <SteelMaterial color="#7b858d" roughness={0.2} />
+          <SteelMaterial color={activePart === "bezel" ? "#B89A5E" : "#9AA2A9"} roughness={0.22} />
         </mesh>
         <mesh position={[0, 0, 0.078]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.985, 0.985, 0.045, 96]} />
-          <meshStandardMaterial color={BEZEL} metalness={0.55} roughness={0.24} />
+          <meshPhysicalMaterial color={BEZEL} metalness={0.05} roughness={0.25} clearcoat={1} clearcoatRoughness={0.12} />
         </mesh>
         <mesh position={[0, 0, 0.105]}>
           <torusGeometry args={[0.925, 0.045, 12, 96]} />
-          <meshStandardMaterial color="#82918a" metalness={0.72} roughness={0.22} />
+          <meshPhysicalMaterial color={activePart === "bezel" ? "#B89A5E" : "#59635E"} metalness={0.8} roughness={0.24} clearcoat={0.5} />
         </mesh>
         {Array.from({ length: 60 }, (_, i) => {
           const a = (i / 60) * Math.PI * 2;
@@ -125,7 +126,12 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
       {/* Glossy black dial */}
       <mesh ref={dial} position={[0, 0, 0.125]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.865, 0.865, 0.035, 96]} />
-        <meshStandardMaterial color={DIAL} metalness={0.22} roughness={0.2} />
+        <meshStandardMaterial color={activePart === "dial" ? "#25483E" : DIAL} metalness={0.2} roughness={0.55} />
+      </mesh>
+      {/* Full-size crystal sits above the indices and hands, and separates as its own layer. */}
+      <mesh ref={crystal} position={[0, 0, 0.32]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.88, 0.88, 0.018, 96]} />
+        <meshPhysicalMaterial color="#E8DFC8" transparent opacity={0.12} roughness={0.05} clearcoat={1} ior={1.5} depthWrite={false} />
       </mesh>
 
       {/* Luminous applied hour markers */}
@@ -175,8 +181,8 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
       <group ref={hands} position={[0, 0, 0.205]}>
         {/* Mercedes-style hour hand */}
         <group rotation={[0, 0, -0.72]}>
-          <mesh position={[0, 0.19, 0.025]}>
-            <boxGeometry args={[0.065, 0.34, 0.025]} />
+          <mesh position={[0, 0.16, 0.025]}>
+            <boxGeometry args={[0.07, 0.32, 0.025]} />
             <meshStandardMaterial color="#e5e9df" metalness={0.72} roughness={0.2} />
           </mesh>
           <mesh position={[0, 0.29, 0.042]}>
@@ -189,18 +195,26 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
           </mesh>
         </group>
         {/* Minute hand */}
-        <mesh position={[0, 0.28, 0.048]} rotation={[0, 0, 0.2]}>
-          <boxGeometry args={[0.035, 0.52, 0.022]} />
-          <meshStandardMaterial color="#f0eee4" metalness={0.7} roughness={0.18} />
-        </mesh>
+        <group rotation={[0, 0, 0.22]}>
+          <mesh position={[0, 0.23, 0.048]}>
+            <boxGeometry args={[0.038, 0.48, 0.024]} />
+            <meshStandardMaterial color="#E6D8B0" metalness={0.8} roughness={0.25} />
+          </mesh>
+        </group>
         {/* Seconds hand */}
-        <mesh position={[0.02, -0.015, 0.065]} rotation={[0, 0, -0.18]}>
-          <boxGeometry args={[0.012, 0.69, 0.012]} />
-          <meshStandardMaterial color="#d4c18b" metalness={0.8} roughness={0.18} />
-        </mesh>
+        <group rotation={[0, 0, -0.2]}>
+          <mesh position={[0, 0, 0.065]}>
+            <boxGeometry args={[0.014, 0.72, 0.014]} />
+            <meshStandardMaterial color="#B89A5E" metalness={0.8} roughness={0.25} />
+          </mesh>
+        </group>
         <mesh position={[0, 0, 0.078]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.055, 0.055, 0.035, 32]} />
-          <meshStandardMaterial color={GOLD} metalness={0.88} roughness={0.18} />
+          <meshStandardMaterial color={GOLD} metalness={0.8} roughness={0.25} />
+        </mesh>
+        <mesh position={[0, 0, 0.102]}>
+          <sphereGeometry args={[0.034, 24, 16]} />
+          <meshPhysicalMaterial color="#E8DFC8" metalness={0.7} roughness={0.22} clearcoat={0.8} />
         </mesh>
       </group>
 
@@ -229,7 +243,7 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
   );
 }
 
-export default function WatchModel() {
+export default function WatchModel({ activePart, showHint = true }: { activePart?: WatchPartKey; showHint?: boolean }) {
   const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -239,21 +253,20 @@ export default function WatchModel() {
     return () => media.removeEventListener("change", update);
   }, []);
   return (
-    <div className="watch-canvas" role="img" aria-label="Interactive three-dimensional conceptual dive watch with a steel bracelet, marked rotating bezel, luminous dial indices, and three hands">
-      <Canvas fallback={<div className="watch-fallback"><strong>MECHANICAL STUDY</strong><span>Three-dimensional preview is unavailable in this browser.</span></div>} camera={{ position: [3.05, 2.25, 8.35], fov: 38 }} dpr={[1, 1.5]}>
-        <color attach="background" args={['#0a0d11']} />
-        <ambientLight intensity={1.0} />
-        <spotLight position={[3.5, 5, 6]} intensity={52} angle={0.42} penumbra={0.85} />
-        <directionalLight position={[-4, 1, 4]} intensity={2.2} color="#d9c69a" />
-        <pointLight position={[-4, -1, 3]} intensity={22} color="#8abbd9" />
-        <pointLight position={[0, 3, -3]} intensity={12} color="#d7dfeb" />
-        <WatchParts reducedMotion={reducedMotion} />
-        {!reducedMotion && <Sparkles count={16} scale={4.5} size={0.8} speed={0.12} opacity={0.14} color="#a5c7d9" />}
-        <ContactShadows position={[0, -2.15, 0]} opacity={0.36} scale={5.2} blur={2.2} far={4} />
-        <Environment preset="studio" />
+    <div className="watch-canvas" role="img" aria-label="Interactive three-dimensional conceptual dive watch with a brushed steel bracelet, rotating bezel, luminous indices, contrasting hour and minute hands, and a gold seconds hand">
+      <Canvas fallback={<div className="watch-fallback"><strong>MECHANICAL STUDY</strong><span>Three-dimensional preview is unavailable in this browser.</span></div>} camera={{ position: [2.8, 2.0, 8.75], fov: 34 }} dpr={[1, 1.5]} gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.9, outputColorSpace: THREE.SRGBColorSpace }}>
+        <color attach="background" args={['#080B10']} />
+        <ambientLight intensity={0.15} />
+        <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#FFF3E0" />
+        <directionalLight position={[4, 1, 3]} intensity={0.5} color="#9DB4FF" />
+        <directionalLight position={[3, 3, -4]} intensity={1.1} color="#C9A45C" />
+        <directionalLight position={[0, -4, 2]} intensity={0.3} color="#3A4A5C" />
+        <WatchParts reducedMotion={reducedMotion} activePart={activePart} />
+        <ContactShadows position={[0, -2.15, 0]} opacity={0.35} scale={5.2} blur={2.2} far={4} />
+        <Environment preset="studio" environmentIntensity={0.8} />
         <OrbitControls enablePan={false} enableDamping={!reducedMotion} dampingFactor={0.08} minDistance={5.5} maxDistance={10} minPolarAngle={0.45} maxPolarAngle={2.5} />
       </Canvas>
-      <span className="drag-hint">DRAG TO ROTATE · SCROLL THE PAGE TO EXPLORE</span>
+      {showHint && <span className="drag-hint">DRAG TO ROTATE · SCROLL THE PAGE TO EXPLORE</span>}
     </div>
   );
 }
