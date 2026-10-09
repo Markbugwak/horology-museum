@@ -190,7 +190,6 @@ function App() {
 
           <div className="hero-stage">
             <div className="stage-orbit orbit-one" aria-hidden="true" />
-            <div className="stage-orbit orbit-two" aria-hidden="true" />
             <div className="stage-index"><span>STUDY 001</span><span>DIVER ARCHETYPE</span></div>
             <img
               className="hero-watch-image"
