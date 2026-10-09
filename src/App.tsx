@@ -22,7 +22,8 @@ function Header({ activeSection }: { activeSection: string }) {
 
 function App() {
   const [active, setActive] = useState(0);
-  const [activeSection, setActiveSection] = useState('top');\n  const [selectedExhibit, setSelectedExhibit] = useState<(typeof exhibits)[number] | null>(null);
+  const [activeSection, setActiveSection] = useState('top');
+  const [selectedExhibit, setSelectedExhibit] = useState<(typeof exhibits)[number] | null>(null);
   useEffect(() => {
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('is-visible');
