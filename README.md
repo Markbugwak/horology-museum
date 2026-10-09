@@ -1,11 +1,12 @@
-# HOROLOGY — Independent Watch Museum
+# HOROLOGY — An Independent Watch Museum
 
-An immersive, educational 3D watch museum exploring watchmaking, design, and the history of iconic timepieces. This is an independent, non-commercial fan/educational project and is not affiliated with or endorsed by Rolex SA.
+HOROLOGY is a non-commercial, educational web experience about watch design, mechanical components, and the history of portable timekeeping. It presents three original watch archetypes and a conceptual interactive 3D model.
 
-## Stack
-- React + TypeScript + Vite
-- Three.js / React Three Fiber / Drei
-- GSAP for scroll-led motion
+## Built with
+
+- React and TypeScript
+- Vite
+- Three.js, React Three Fiber, and Drei
 - Lucide React icons
 
 ## Run locally
@@ -15,13 +16,19 @@ npm install
 npm run dev
 ```
 
-## 3D model note
-The included watch is a procedural demonstration model, not a factory-accurate Rolex model. For a true exploded animation, add a properly licensed GLB/GLTF model with separate named meshes for the case, bezel, crystal, dial, hands, movement, crown, and bracelet. Put it in `public/models/` and document the asset license.
+## Available scripts
 
-## Scope
-- No ecommerce or checkout
-- Interactive rotating watch viewer
-- Educational watch history and design details
-- Scroll-led anatomy/exploded-view storytelling (model-dependent)
+- `npm run dev` — start the local development server
+- `npm run build` — run TypeScript checks and create a production build
+- `npm run lint` — run ESLint
 
-Product names and trademarks belong to their respective owners. The project is not an official Rolex website.
+## About the model
+
+The watch is a procedural conceptual model created for interaction and learning. It is not a factory-accurate replica. The anatomy view demonstrates the relationship between selected external components; it does not represent every part of a mechanical movement.
+
+## Scope and attribution
+
+- No shopping, checkout, pricing, or commercial product listings
+- Original educational archetypes rather than specific manufacturer models
+- No affiliation with or endorsement by a watch brand
+- Watchmaking terms are used descriptively for educational context
