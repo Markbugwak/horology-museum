@@ -1,7 +1,7 @@
 # 3D model assets
 
-The current watch is a procedural visual concept built from Three.js primitives. It is not an accurate Rolex product model.
+The current watch is a procedural concept assembled from Three.js primitives. It is designed to explain the relationship between visible external parts; it is not a factory-accurate watch or mechanical movement.
 
-For a detailed exploded-view experience, add a properly licensed GLB or GLTF file here with separately named meshes for the case, bezel, crystal, dial, hands, movement, crown, and bracelet. Keep the asset license and creator attribution with the model. Update the viewer to load the model with Drei's useGLTF and animate each component along the watch's depth axis.
+If a licensed GLB or GLTF model is added later, keep the creator attribution and license with the asset. Use clearly named meshes for components that need independent interaction, and verify the license permits the intended public use before committing the file.
 
-Do not use scraped or unlicensed brand assets. This project is independent and is not affiliated with Rolex SA.
+Do not use scraped, trademarked, or unlicensed manufacturer assets. HOROLOGY is an independent educational project and does not represent or endorse any watch manufacturer.
