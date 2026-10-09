@@ -155,10 +155,10 @@ function WatchParts({ reducedMotion = false }: { reducedMotion?: boolean }) {
       </group>
 
       {/* Dial lettering, kept subtle like a real instrument dial */}
-      <Text position={[0, 0.42, 0.205]} fontSize={0.105} color="#e6e8df" anchorX="center" anchorY="middle" letterSpacing={0.08} fontWeight={700}>ROLEX</Text>
-      <Text position={[0, 0.30, 0.205]} fontSize={0.044} color="#cbd1c9" anchorX="center" anchorY="middle" letterSpacing={0.03}>OYSTER PERPETUAL</Text>
-      <Text position={[0, -0.37, 0.205]} fontSize={0.052} color="#d4d8d0" anchorX="center" anchorY="middle" letterSpacing={0.02}>SUBMARINER</Text>
-      <Text position={[0, -0.46, 0.205]} fontSize={0.032} color="#aeb9b0" anchorX="center" anchorY="middle">1000 ft = 300 m</Text>
+      <Text position={[0, 0.42, 0.205]} fontSize={0.105} color="#e6e8df" anchorX="center" anchorY="middle" letterSpacing={0.08} fontWeight={700}>HOROLOGY</Text>
+      <Text position={[0, 0.30, 0.205]} fontSize={0.044} color="#cbd1c9" anchorX="center" anchorY="middle" letterSpacing={0.03}>MECHANICAL STUDY</Text>
+      <Text position={[0, -0.37, 0.205]} fontSize={0.052} color="#d4d8d0" anchorX="center" anchorY="middle" letterSpacing={0.02}>DIVER</Text>
+      <Text position={[0, -0.46, 0.205]} fontSize={0.032} color="#aeb9b0" anchorX="center" anchorY="middle">AUTOMATIC</Text>
 
       {/* Date window and raised cyclops magnifier at 3 o'clock */}
       <mesh position={[0.53, 0.02, 0.211]}>
