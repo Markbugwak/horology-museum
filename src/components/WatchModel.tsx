@@ -6,7 +6,6 @@ import * as THREE from 'three';
 const STEEL = '#8A929A';
 const GOLD = '#B89A5E';
 const DIAL = '#0F2A26';
-const BEZEL = '#0A1B18';
 type WatchPartKey = 'bezel' | 'crystal' | 'hands' | 'case';
 
 function SteelMaterial({ color = STEEL, roughness = 0.42, opacity = 1 }: { color?: string; roughness?: number; opacity?: number }) {
