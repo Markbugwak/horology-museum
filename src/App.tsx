@@ -282,7 +282,7 @@ function App() {
                   <div className="art-ring" aria-hidden="true" />
                   <div className={`art-watch art-watch-${item.number}`} aria-hidden="true">
                     <div className="art-dial">
-                      {item.number !== '02' && Array.from({ length: 12 }, (_, index) => (
+                      {Array.from({ length: 12 }, (_, index) => (
                         <span className="art-hour-marker" key={index} style={{ transform: `translateX(-50%) rotate(${index * 30}deg)` }} />
                       ))}
                       <span className="art-hand hand-a" />
@@ -326,7 +326,6 @@ function App() {
           <p className="eyebrow">HOROLOGY / AN INDEPENDENT STUDY</p>
           <h2>Start at the case.<br />Finish at the <em>hands.</em></h2>
           <a className="button button-light" href="#collection">BACK TO THE COLLECTION <ArrowRight size={16} aria-hidden="true" /></a>
-          <div className="closing-orbit" aria-hidden="true" />
         </section>
       </main>
 
