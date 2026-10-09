@@ -4,7 +4,6 @@ import { ContactShadows, Environment, OrbitControls, Sparkles, Text } from '@rea
 import * as THREE from 'three';
 
 const STEEL = '#b9c2ca';
-const POLISHED = '#e4e8eb';
 const GOLD = '#e7d6a1';
 const DIAL = '#07151b';
 const BEZEL = '#102e2b';
