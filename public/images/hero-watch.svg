@@ -37,8 +37,8 @@
   <path d="M0 -213 l-17 28 h34 Z" fill="#e8dfc8" stroke="#b89a5e" stroke-width="3"/>
   <!-- dial indices -->
   <g transform="rotate(0)"><rect x="-7" y="-185" width="14" height="30" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(30)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(60)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(90)"><rect x="-7" y="-185" width="14" height="30" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(120)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(150)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(180)"><rect x="-7" y="-185" width="14" height="30" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(210)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(240)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(270)"><rect x="-7" y="-185" width="14" height="30" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(300)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g><g transform="rotate(330)"><rect x="-7" y="-185" width="14" height="21" rx="3" fill="#e8dfc8" stroke="#b89a5e" stroke-width="2"/></g>
-  <text x="0" y="-104" text-anchor="middle" font-family="Georgia,serif" font-size="22" letter-spacing="5" fill="#e8dfc8">HOROLOGY</text>
-  <text x="0" y="-76" text-anchor="middle" font-family="monospace" font-size="11" letter-spacing="3" fill="#c9cdbb">MECHANICAL STUDY</text>
+  
+  
   <!-- hands and center pin -->
   <path d="M-6 8 L-14 -88 Q0 -109 14 -88 L6 8 Z" fill="#e6d8b0" stroke="#a58a58" stroke-width="3"/>
   <path d="M-4 3 L-7 86 L0 105 L7 86 L4 3 Z" fill="#e6d8b0" stroke="#a58a58" stroke-width="2" transform="rotate(48)"/>
@@ -50,7 +50,7 @@
   <path d="M260 -26 v52" stroke="#303940" stroke-width="3"/><path d="M266 -26 v52" stroke="#303940" stroke-width="3"/><path d="M272 -26 v52" stroke="#303940" stroke-width="3"/><path d="M278 -26 v52" stroke="#303940" stroke-width="3"/><path d="M284 -26 v52" stroke="#303940" stroke-width="3"/><path d="M290 -26 v52" stroke="#303940" stroke-width="3"/><path d="M296 -26 v52" stroke="#303940" stroke-width="3"/>
  </g>
 </g>
-<text x="70" y="82" font-family="monospace" font-size="17" letter-spacing="5" fill="#b9ad91">HOROLOGY / FIG. 001</text>
-<text x="70" y="112" font-family="monospace" font-size="11" letter-spacing="3" fill="#7f897c">AUTOMATIC MECHANICAL STUDY</text>
-<text x="70" y="1325" font-family="monospace" font-size="12" letter-spacing="3" fill="#b9ad91">BRUSHED STEEL · DEEP GREEN DIAL · GOLD DETAIL</text>
+
+
+
 </svg>
