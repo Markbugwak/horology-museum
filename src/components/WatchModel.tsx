@@ -6,11 +6,10 @@ import * as THREE from 'three';
 const STEEL = '#8A929A';
 const GOLD = '#B89A5E';
 const DIAL = '#0F2A26';
-const BEZEL = '#0A1B18';
 type WatchPartKey = 'bezel' | 'crystal' | 'hands' | 'case';
 
 function SteelMaterial({ color = STEEL, roughness = 0.42, opacity = 1 }: { color?: string; roughness?: number; opacity?: number }) {
-  return <meshPhysicalMaterial color={color} metalness={1} roughness={roughness} anisotropy={0.5} envMapIntensity={0.8} clearcoat={0.12} clearcoatRoughness={0.36} transparent={opacity < 1} opacity={opacity} />;
+  return <meshPhysicalMaterial color={color} metalness={0.86} roughness={roughness} anisotropy={0.5} envMapIntensity={0.42} clearcoat={0.18} clearcoatRoughness={0.36} transparent={opacity < 1} opacity={opacity} />;
 }
 
 
@@ -58,11 +57,11 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
           {Array.from({ length: 7 }, (_, i) => {
             const y = side * (0.84 + i * 0.235);
             return (
-              <group key={i} position={[0, y, 0]}>
+              <group key={i} position={[0, y, 0]} rotation={[0, 0, side * i * 0.012]}>
                 {[-1, 0, 1].map((column) => (
-                  <mesh key={column} position={[column * 0.235, 0, column === 0 ? 0.012 : 0]}>
-                    <RoundedBox args={[column === 0 ? 0.22 : 0.215, 0.218, column === 0 ? 0.115 : 0.095]} radius={0.025} smoothness={3} />
-                    <SteelMaterial color={column === 0 ? '#7C848C' : '#68727B'} roughness={column === 0 ? 0.42 : 0.46} opacity={activePart ? 0.3 : 1} />
+                  <mesh key={column} position={[column * 0.32, 0, column === 0 ? 0.012 : 0]}>
+                    <RoundedBox args={[0.30, 0.218, column === 0 ? 0.105 : 0.09]} radius={0.035} smoothness={4} />
+                    <SteelMaterial color={column === 0 ? '#68747B' : '#46515A'} roughness={column === 0 ? 0.36 : 0.48} opacity={activePart ? 0.22 : 0.96} />
                   </mesh>
                 ))}
               </group>
@@ -253,9 +252,9 @@ export default function WatchModel({ activePart, showHint = true }: { activePart
       <Canvas fallback={<div className="watch-fallback"><strong>MECHANICAL STUDY</strong><span>Three-dimensional preview is unavailable in this browser.</span></div>} camera={{ position: [2.4, 1.75, 8.5], fov: 30 }} dpr={[1, 1.5]} gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.9, outputColorSpace: THREE.SRGBColorSpace }}>
         <color attach="background" args={['#080B10']} />
         <hemisphereLight args={["#d9dfdf", "#1b211d", 0.15]} />
-        <directionalLight position={[-3, 4, 5]} intensity={2.2} color="#FFF3E0" />
+        <directionalLight position={[-3, 4, 5]} intensity={1.55} color="#FFF3E0" />
         <directionalLight position={[4, 1, 3]} intensity={0.5} color="#9DB4FF" />
-        <directionalLight position={[3, 3, -4]} intensity={1.6} color="#C9A45C" />
+        <directionalLight position={[3, 3, -4]} intensity={1.1} color="#C9A45C" />
         <directionalLight position={[0, -4, 2]} intensity={0.3} color="#3A4A5C" />
         <WatchParts reducedMotion={reducedMotion} activePart={activePart} />
         <ContactShadows position={[0, -2.15, 0]} opacity={0.35} scale={5.2} blur={2.2} far={4} />
