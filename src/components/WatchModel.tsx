@@ -93,6 +93,7 @@ function WatchParts() {
       <group ref={bezel} position={[0, 0, 0.245]}>
         <mesh>
           <cylinderGeometry args={[1.025, 1.025, 0.13, 96]} />
+          <meshStandardMaterial color="#7b858d" metalness={0.94} roughness={0.2} />
           <SteelMaterial color="#7b858d" roughness={0.2} />
         </mesh>
         <mesh position={[0, 0, 0.078]}>
