@@ -17,6 +17,7 @@ function SteelMaterial({ color = STEEL, roughness = 0.42, opacity = 1 }: { color
 function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boolean; activePart?: WatchPartKey }) {
   const group = useRef<THREE.Group>(null);
   const bezel = useRef<THREE.Group>(null);
+  const caseLayer = useRef<THREE.Group>(null);
   const crystal = useRef<THREE.Mesh>(null);
   const dial = useRef<THREE.Mesh>(null);
   const hands = useRef<THREE.Group>(null);
@@ -42,6 +43,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
     const e = THREE.MathUtils.clamp(explode, 0, 1);
     if (group.current) group.current.position.y = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
     if (bezel.current) bezel.current.position.z = 0.245 + e * 0.88 + (activePart === "bezel" ? 0.18 : 0);
+    if (caseLayer.current) caseLayer.current.position.z = -e * 0.42 + (activePart === "case" ? -0.16 : 0);
     if (crystal.current) crystal.current.position.z = 0.32 + e * 1.15 + (activePart === "crystal" ? 0.24 : 0);
     if (dial.current) dial.current.position.z = 0.125 + e * 0.28;
     if (hands.current) hands.current.position.z = 0.205 + e * 0.36 + (activePart === "hands" ? 0.14 : 0);
@@ -63,16 +65,14 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
                     <SteelMaterial color={column === 0 ? '#7C848C' : '#68727B'} roughness={column === 0 ? 0.42 : 0.46} opacity={activePart ? 0.3 : 1} />
                   </mesh>
                 ))}
-                <mesh position={[0, side * 0.105, -0.005]}>
-                  <boxGeometry args={[0.69, 0.018, 0.105]} />
-                  <SteelMaterial color="#3E444A" roughness={0.48} opacity={activePart ? 0.3 : 1} />
-                </mesh>
               </group>
             );
           })}
         </group>
       ))}
 
+      {/* Case shell moves rearward as its own exploded layer. */}
+      <group ref={caseLayer}>
       {/* Case back and substantial stainless-steel case. Cylinders are rotated so the dial faces forward. */}
       <mesh position={[0, 0, -0.115]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[1.025, 1.025, 0.19, 96]} />
@@ -90,6 +90,8 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
           <SteelMaterial color={activePart === "case" ? "#B89A5E" : "#8A929A"} roughness={0.3} opacity={dim('case')} />
         </mesh>
       )))}
+
+      </group>
 
       {/* Bezel is a polished gold ring only: no solid disc sits over the dial. */}
       <group ref={bezel} position={[0, 0, 0.245]}>
@@ -120,7 +122,7 @@ function WatchParts({ reducedMotion = false, activePart }: { reducedMotion?: boo
       {/* Glossy black dial */}
       <mesh ref={dial} position={[0, 0, 0.125]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.865, 0.865, 0.035, 96]} />
-        <meshStandardMaterial color={activePart === "hands" ? DIAL : activePart === "crystal" ? DIAL : DIAL} metalness={0.2} roughness={0.55} transparent={activePart === 'bezel' || activePart === 'case' ? true : false} opacity={activePart === 'bezel' || activePart === 'case' ? 0.3 : 1} />
+        <meshStandardMaterial color={DIAL} metalness={0.2} roughness={0.55} transparent={Boolean(activePart && activePart !== "hands")} opacity={dim("hands")} />
       </mesh>
       {/* Full-size crystal sits above the indices and hands, and separates as its own layer. */}
       <mesh ref={crystal} position={[0, 0, 0.32]} rotation={[Math.PI / 2, 0, 0]}>
