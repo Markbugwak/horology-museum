@@ -209,7 +209,7 @@ function App() {
               fetchPriority="high"
               loading="eager"
               decoding="async"
-              alt="Original illustration of a conceptual dive watch with a dark green dial, steel bracelet, and gold-toned bezel"
+              alt="Conceptual stainless-steel skeleton mechanical watch with a dark open-work dial and polished multi-link bracelet"
             />
             <a className="hero-model-link" href="#anatomy">INSPECT THE 3D MODEL <ArrowDown size={13} aria-hidden="true" /></a>
             <div className="stage-caption"><span>STAINLESS STEEL</span><span>CONCEPTUAL DESIGN STUDY</span></div>
