@@ -203,7 +203,7 @@ function App() {
             <div className="stage-index"><span>STUDY 001</span><span>DIVER ARCHETYPE</span></div>
             <img
               className="hero-watch-image"
-              src="/images/hero-watch.jpg"
+              src="/images/hero-watch.png"
               width="1200"
               height="1400"
               fetchPriority="high"
